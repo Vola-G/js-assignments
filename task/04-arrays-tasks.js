@@ -479,12 +479,13 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]   
  */
 function getIdentityMatrix(n) {
-   let innerArr = new Array(n);
-   let arr = new Array(n).fill(innerArr);
-   for (let i = 0; i < n; i++){
-      arr[i[innerArr[i]]].push(1);
-   }
-   return arr;
+   let arr = new Array(n).fill(0);
+    let createSubArr = function (subArr, i){
+        subArr = new Array(n).fill(0);
+        subArr[i] = 1;
+        return subArr;
+    }
+     return arr.map(createSubArr);
 }
 
 /**
@@ -551,7 +552,14 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   
+   let newMap = new Map();
+   let country = keySelector;
+   let city = valueSelector;
+   array.map(function (x) {
+      if (!newMap.has(country(x)))
+         newMap.set(country(x), array.filter(y => country(x) === country(y)).map(z => city(z)))
+   });
+   return newMap;
 }
 
 
